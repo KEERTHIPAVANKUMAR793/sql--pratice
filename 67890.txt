@@ -1,0 +1,115 @@
+MariaDB [student]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| faculity           |
+| first              |
+| information_schema |
+| mysql              |
+| performance_schema |
+| retail             |
+| salespeople        |
+| session4           |
+| student            |
+| test               |
++--------------------+
+10 rows in set (0.00 sec)
+
+MariaDB [student]> use first;
+Database changed
+MariaDB [first]> create  table first(fname  varchar (20),fcity  varchar (20), fage int,gender varchar(20));
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [first]> select*from first;
+Empty set (0.00 sec)
+
+MariaDB [first]> insert into first (fname,fcity,fage,gender) value('koti','guntur',90,'male');
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [first]> insert into first(fname,fcity,fage,gender) value('krishna',vijayawada,70,'male');
+ERROR 1054 (42S22): Unknown column 'vijayawada' in 'field list'
+MariaDB [first]>  insert into first(fname,fcity,fage,gender) value('krishna','vijayawada',70,'male');                                                                  
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [first]> insert into first (fname,fcity,fage,gender) value('chaden','guntur',90,'male');                                                                       
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [first]> insert into first (fname,fcity,fage,gender) value('varun','hyd',90,'male');                                                                           
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [first]> select*from tablefirst;
+ERROR 1146 (42S02): Table 'first.tablefirst' doesn't exist
+MariaDB [first]> select*from first;
++---------+------------+------+--------+
+| fname   | fcity      | fage | gender |
++---------+------------+------+--------+
+| koti    | guntur     |   90 | male   |
+| krishna | vijayawada |   70 | male   |
+| chaden  | guntur     |   90 | male   |
+| varun   | hyd        |   90 | male   |
++---------+------------+------+--------+
+4 rows in set (0.00 sec)
+
+MariaDB [first]> alter table first add rank int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [first]> select*from first;
++---------+------------+------+--------+------+
+| fname   | fcity      | fage | gender | rank |
++---------+------------+------+--------+------+
+| koti    | guntur     |   90 | male   | NULL |
+| krishna | vijayawada |   70 | male   | NULL |
+| chaden  | guntur     |   90 | male   | NULL |
+| varun   | hyd        |   90 | male   | NULL |
++---------+------------+------+--------+------+
+4 rows in set (0.01 sec)
+
+MariaDB [first]> update first set rank where fname='koti';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'where fname='koti'' at line 1
+MariaDB [first]> update first set rank=1 where fname='koti';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [first]> select * from first;
++---------+------------+------+--------+------+
+| fname   | fcity      | fage | gender | rank |
++---------+------------+------+--------+------+
+| koti    | guntur     |   90 | male   |    1 |
+| krishna | vijayawada |   70 | male   | NULL |
+| chaden  | guntur     |   90 | male   | NULL |
+| varun   | hyd        |   90 | male   | NULL |
++---------+------------+------+--------+------+
+4 rows in set (0.00 sec)
+
+MariaDB [first]> update first set rank=2 where fname='krishna';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [first]> select*from first;
++---------+------------+------+--------+------+
+| fname   | fcity      | fage | gender | rank |
++---------+------------+------+--------+------+
+| koti    | guntur     |   90 | male   |    1 |
+| krishna | vijayawada |   70 | male   |    2 |
+| chaden  | guntur     |   90 | male   | NULL |
+| varun   | hyd        |   90 | male   | NULL |
++---------+------------+------+--------+------+
+4 rows in set (0.00 sec)
+
+MariaDB [first]> update first set fage=150  where fname='chaden';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [first]> select*from first;
++---------+------------+------+--------+------+
+| fname   | fcity      | fage | gender | rank |
++---------+------------+------+--------+------+
+| koti    | guntur     |   90 | male   |    1 |
+| krishna | vijayawada |   70 | male   |    2 |
+| chaden  | guntur     |  150 | male   | NULL |
+| varun   | hyd        |   90 | male   | NULL |
++---------+------------+------+--------+------+
+4 rows in set (0.01 sec)
+
+MariaDB [first]> 

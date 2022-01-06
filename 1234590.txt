@@ -1,0 +1,319 @@
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| faculity           |
+| first              |
+| information_schema |
+| mysql              |
+| performance_schema |
+| retail             |
+| salespeople        |
+| session4           |
+| student            |
+| test               |
++--------------------+
+10 rows in set (0.00 sec)
+
+MariaDB [(none)]> use student;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [student]> select*from student;
++------------+----------+-------+--------+
+| student_id | sname    | marks | gender |
++------------+----------+-------+--------+
+| s101       | srikanth |    99 | male   |
++------------+----------+-------+--------+
+1 row in set (0.00 sec)
+
+MariaDB [student]> insert into student(student_id,sname,marks,gender) values('s102','pavan',98,'male');
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [student]> insert into student(student_id,sname,marks,gender) values('s103','kumar',78,'male');                                                                
+Query OK, 1 row affected (0.01 sec)
+
+MariaDB [student]> insert into student (student_id,sname,marks,gender) values('s104','siva',96,'male');
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [student]> insert into student (student_id,sname,marks,gender) values('s105','mahendra',96,'male');                                                            
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [student]> select*from student;
++------------+----------+-------+--------+
+| student_id | sname    | marks | gender |
++------------+----------+-------+--------+
+| s101       | srikanth |    99 | male   |
+| s102       | pavan    |    98 | male   |
+| s103       | kumar    |    78 | male   |
+| s104       | siva     |    96 | male   |
+| s105       | mahendra |    96 | male   |
++------------+----------+-------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> alter table student add city varchar(30);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [student]> select * from student;
++------------+----------+-------+--------+------+
+| student_id | sname    | marks | gender | city |
++------------+----------+-------+--------+------+
+| s101       | srikanth |    99 | male   | NULL |
+| s102       | pavan    |    98 | male   | NULL |
+| s103       | kumar    |    78 | male   | NULL |
+| s104       | siva     |    96 | male   | NULL |
+| s105       | mahendra |    96 | male   | NULL |
++------------+----------+-------+--------+------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> update student set marks=20 where id='s101';
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+MariaDB [student]> update student set marks=20 where student_id='s101';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [student]> update student set city=pune where student_id='s103';
+ERROR 1054 (42S22): Unknown column 'pune' in 'field list'
+MariaDB [student]> update student set city='pune' where student_id='s103';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [student]> update student set city='vijayawa' where student_id='s105';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [student]> update student set city='guntur' where student_id='s103';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [student]> update student set city='pune' where student_id='s102';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [student]> select*from student;
++------------+----------+-------+--------+----------+
+| student_id | sname    | marks | gender | city     |
++------------+----------+-------+--------+----------+
+| s101       | srikanth |    20 | male   | NULL     |
+| s102       | pavan    |    98 | male   | pune     |
+| s103       | kumar    |    78 | male   | guntur   |
+| s104       | siva     |    96 | male   | NULL     |
+| s105       | mahendra |    96 | male   | vijayawa |
++------------+----------+-------+--------+----------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> update student set city='guntur' where student_id='s101';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [student]> update student set ='hyd' where student_id='s104';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '='hyd' where student_id='s104'' at line 1
+MariaDB [student]>  update student set city='guntur' where student_id='s104';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [student]> select*from student;
++------------+----------+-------+--------+----------+
+| student_id | sname    | marks | gender | city     |
++------------+----------+-------+--------+----------+
+| s101       | srikanth |    20 | male   | guntur   |
+| s102       | pavan    |    98 | male   | pune     |
+| s103       | kumar    |    78 | male   | guntur   |
+| s104       | siva     |    96 | male   | guntur   |
+| s105       | mahendra |    96 | male   | vijayawa |
++------------+----------+-------+--------+----------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> alter table student add mobile number int(10);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'number int(10)' at line 1
+MariaDB [student]>  alter table student add mobile  int(10);                                                                                                           
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [student]> select*from student;
++------------+----------+-------+--------+----------+--------+
+| student_id | sname    | marks | gender | city     | mobile |
++------------+----------+-------+--------+----------+--------+
+| s101       | srikanth |    20 | male   | guntur   |   NULL |
+| s102       | pavan    |    98 | male   | pune     |   NULL |
+| s103       | kumar    |    78 | male   | guntur   |   NULL |
+| s104       | siva     |    96 | male   | guntur   |   NULL |
+| s105       | mahendra |    96 | male   | vijayawa |   NULL |
++------------+----------+-------+--------+----------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> update student set mobile='6300449725' where student_id='s102';
+ERROR 1264 (22003): Out of range value for column 'mobile' at row 2
+MariaDB [student]>  update student set mobile=8790097882 where student_id='s101';
+ERROR 1264 (22003): Out of range value for column 'mobile' at row 1
+MariaDB [student]> update student set sname='baji'where student_id='s104';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [student]> select*from stuident;
+ERROR 1146 (42S02): Table 'student.stuident' doesn't exist
+MariaDB [student]> select *from student;
++------------+----------+-------+--------+----------+--------+
+| student_id | sname    | marks | gender | city     | mobile |
++------------+----------+-------+--------+----------+--------+
+| s101       | srikanth |    20 | male   | guntur   |   NULL |
+| s102       | pavan    |    98 | male   | pune     |   NULL |
+| s103       | kumar    |    78 | male   | guntur   |   NULL |
+| s104       | baji     |    96 | male   | guntur   |   NULL |
+| s105       | mahendra |    96 | male   | vijayawa |   NULL |
++------------+----------+-------+--------+----------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> update student marks=10 where studentid='s101';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '=10 where studentid='s101'' at line 1
+MariaDB [student]> update student set marks=10 where student_id='s101';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [student]> select*from student;
++------------+----------+-------+--------+----------+--------+
+| student_id | sname    | marks | gender | city     | mobile |
++------------+----------+-------+--------+----------+--------+
+| s101       | srikanth |    10 | male   | guntur   |   NULL |
+| s102       | pavan    |    98 | male   | pune     |   NULL |
+| s103       | kumar    |    78 | male   | guntur   |   NULL |
+| s104       | baji     |    96 | male   | guntur   |   NULL |
+| s105       | mahendra |    96 | male   | vijayawa |   NULL |
++------------+----------+-------+--------+----------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> update student add marks=10 where student_id='s101';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'add marks=10 where student_id='s101'' at line 1
+MariaDB [student]> update student set add marks=10 where student_id='s101';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'add marks=10 where student_id='s101'' at line 1
+MariaDB [student]> update student set marks=marks+10 where city='guntur';
+Query OK, 3 rows affected (0.00 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+MariaDB [student]> select*from student;
++------------+----------+-------+--------+----------+--------+
+| student_id | sname    | marks | gender | city     | mobile |
++------------+----------+-------+--------+----------+--------+
+| s101       | srikanth |    20 | male   | guntur   |   NULL |
+| s102       | pavan    |    98 | male   | pune     |   NULL |
+| s103       | kumar    |    88 | male   | guntur   |   NULL |
+| s104       | baji     |   106 | male   | guntur   |   NULL |
+| s105       | mahendra |    96 | male   | vijayawa |   NULL |
++------------+----------+-------+--------+----------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> update student set marks+20 where city='pune';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '+20 where city='pune'' at line 1
+MariaDB [student]> update student set marks= marks+20 where city='pune';                                                                                               
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [student]> select*from student;
++------------+----------+-------+--------+----------+--------+
+| student_id | sname    | marks | gender | city     | mobile |
++------------+----------+-------+--------+----------+--------+
+| s101       | srikanth |    20 | male   | guntur   |   NULL |
+| s102       | pavan    |   118 | male   | pune     |   NULL |
+| s103       | kumar    |    88 | male   | guntur   |   NULL |
+| s104       | baji     |   106 | male   | guntur   |   NULL |
+| s105       | mahendra |    96 | male   | vijayawa |   NULL |
++------------+----------+-------+--------+----------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> select*from student_id='s102';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''s102'' at line 1
+MariaDB [student]> select*from student where student_id='s102';
++------------+-------+-------+--------+------+--------+
+| student_id | sname | marks | gender | city | mobile |
++------------+-------+-------+--------+------+--------+
+| s102       | pavan |   118 | male   | pune |   NULL |
++------------+-------+-------+--------+------+--------+
+1 row in set (0.00 sec)
+
+MariaDB [student]> select*from student where>50;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>50' at line 1
+MariaDB [student]> select*from student where marks>50;
++------------+----------+-------+--------+----------+--------+
+| student_id | sname    | marks | gender | city     | mobile |
++------------+----------+-------+--------+----------+--------+
+| s102       | pavan    |   118 | male   | pune     |   NULL |
+| s103       | kumar    |    88 | male   | guntur   |   NULL |
+| s104       | baji     |   106 | male   | guntur   |   NULL |
+| s105       | mahendra |    96 | male   | vijayawa |   NULL |
++------------+----------+-------+--------+----------+--------+
+4 rows in set (0.00 sec)
+
+MariaDB [student]> select *from student where marks<50;
++------------+----------+-------+--------+--------+--------+
+| student_id | sname    | marks | gender | city   | mobile |
++------------+----------+-------+--------+--------+--------+
+| s101       | srikanth |    20 | male   | guntur |   NULL |
++------------+----------+-------+--------+--------+--------+
+1 row in set (0.00 sec)
+
+MariaDB [student]> alter table student add age int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [student]> select*from student;
++------------+----------+-------+--------+----------+--------+------+
+| student_id | sname    | marks | gender | city     | mobile | age  |
++------------+----------+-------+--------+----------+--------+------+
+| s101       | srikanth |    20 | male   | guntur   |   NULL | NULL |
+| s102       | pavan    |   118 | male   | pune     |   NULL | NULL |
+| s103       | kumar    |    88 | male   | guntur   |   NULL | NULL |
+| s104       | baji     |   106 | male   | guntur   |   NULL | NULL |
+| s105       | mahendra |    96 | male   | vijayawa |   NULL | NULL |
++------------+----------+-------+--------+----------+--------+------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> update student set age=50 where student_id='s101';                                                                                                  
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [student]> select*from student;
++------------+----------+-------+--------+----------+--------+------+
+| student_id | sname    | marks | gender | city     | mobile | age  |
++------------+----------+-------+--------+----------+--------+------+
+| s101       | srikanth |    20 | male   | guntur   |   NULL |   50 |
+| s102       | pavan    |   118 | male   | pune     |   NULL | NULL |
+| s103       | kumar    |    88 | male   | guntur   |   NULL | NULL |
+| s104       | baji     |   106 | male   | guntur   |   NULL | NULL |
+| s105       | mahendra |    96 | male   | vijayawa |   NULL | NULL |
++------------+----------+-------+--------+----------+--------+------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> alter table student drop coloum mobile;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'mobile' at line 1
+MariaDB [student]> select*from student;
++------------+----------+-------+--------+----------+--------+------+
+| student_id | sname    | marks | gender | city     | mobile | age  |
++------------+----------+-------+--------+----------+--------+------+
+| s101       | srikanth |    20 | male   | guntur   |   NULL |   50 |
+| s102       | pavan    |   118 | male   | pune     |   NULL | NULL |
+| s103       | kumar    |    88 | male   | guntur   |   NULL | NULL |
+| s104       | baji     |   106 | male   | guntur   |   NULL | NULL |
+| s105       | mahendra |    96 | male   | vijayawa |   NULL | NULL |
++------------+----------+-------+--------+----------+--------+------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> alter table student drop column  mobile;                                                                                                            
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [student]> select*from student
+    -> ;
++------------+----------+-------+--------+----------+------+
+| student_id | sname    | marks | gender | city     | age  |
++------------+----------+-------+--------+----------+------+
+| s101       | srikanth |    20 | male   | guntur   |   50 |
+| s102       | pavan    |   118 | male   | pune     | NULL |
+| s103       | kumar    |    88 | male   | guntur   | NULL |
+| s104       | baji     |   106 | male   | guntur   | NULL |
+| s105       | mahendra |    96 | male   | vijayawa | NULL |
++------------+----------+-------+--------+----------+------+
+5 rows in set (0.00 sec)
+
+MariaDB [student]> 
